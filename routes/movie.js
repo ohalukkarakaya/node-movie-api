@@ -30,7 +30,7 @@ router.get('/:movie_id', (req, res, next) => {
   })
 });
 
-//update movie detail
+//update movie
 router.put('/:movie_id', (req, res, next) => {
   const promise = Movie.findByIdAndUpdate(
     req.params.movie_id,
