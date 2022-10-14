@@ -17,34 +17,35 @@ router.get('/', (req, res) => {
 
 //get movie detail
 router.get('/:movie_id', (req, res, next) => {
-  const promise = Movie.findById(req.params.movie_id);
-
-  promise.then((movie) => {
-    
-    if(!movie)
-      next();
-      
-    res.json(movie);
-  }).catch((err) => {
-    res.json(err);
-  })
+  Movie.findById(
+    req.params.movie_id,
+    (err, movie) => {
+      if(!movie){
+        const error = new Error("Movie Not Found");
+        error.status = 404;
+        next(error);
+      }else{
+        res.json(movie);
+      }
+    }
+  );
 });
 
 //update movie
 router.put('/:movie_id', (req, res, next) => {
-  const promise = Movie.findByIdAndUpdate(
+  Movie.findByIdAndUpdate(
     req.params.movie_id,
-    req.body
+    req.body,
+    (err, movie) => {
+      if(!movie){
+        const error = new Error("Movie Couldn't Update");
+        error.status = 404;
+        next(error);
+      }else{
+        res.json(movie);
+      }
+    }
   );
-
-  promise.then((movie) => {
-    if(!movie)
-      next();
-      
-    res.json(movie);
-  }).catch((err) => {
-    res.json(err);
-  })
 })
 
 //post movie
