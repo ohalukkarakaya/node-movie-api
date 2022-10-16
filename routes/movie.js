@@ -31,11 +31,33 @@ router.get('/:movie_id', (req, res, next) => {
   );
 });
 
+//get movie detail
+router.delete('/:movie_id', (req, res, next) => {
+  Movie.findByIdAndRemove(
+    req.params.movie_id,
+    (err, movie) => {
+      if(!movie){
+        const error = new Error("Movie Doesn't Exist");
+        error.status = 404;
+        next(error);
+      }else{
+        res.json({
+          status: 200,
+          message: "movie deleted"
+        });
+      }
+    }
+  );
+});
+
 //update movie
 router.put('/:movie_id', (req, res, next) => {
   Movie.findByIdAndUpdate(
     req.params.movie_id,
     req.body,
+    {
+      new: true,
+    },
     (err, movie) => {
       if(!movie){
         const error = new Error("Movie Couldn't Update");
