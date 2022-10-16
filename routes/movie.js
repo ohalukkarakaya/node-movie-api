@@ -102,7 +102,7 @@ router.put('/:movie_id', (req, res, next) => {
       }
     }
   );
-})
+});
 
 //post movie
 router.post('/', (req, res, next) => {
