@@ -15,6 +15,40 @@ router.get('/', (req, res) => {
   });
 });
 
+//search movie by years
+router.get('/between/:start_year/:end_year', (req, res, next) => {
+  const {start_year, end_year} = req.params;
+  Movie.find(
+    {
+      year: {"$gte": Number(start_year), "$lte": Number(end_year)}
+    },
+    (err, movie) => {
+      if(!movie){
+        const error = new Error("No Movie Found");
+        error.status = 404;
+        next(error);
+      }else{
+        res.json(movie);
+      }
+    }
+  );
+});
+
+//top10
+router.get('/top10', (req, res, next) => {
+  Movie.find(
+    (err, movie) => {
+      if(!movie){
+        const error = new Error("No Movie Found");
+        error.status = 404;
+        next(error);
+      }else{
+        res.json(movie);
+      }
+    }
+  ).limit(10).sort({imdb_score: -1});
+});
+
 //get movie detail
 router.get('/:movie_id', (req, res, next) => {
   Movie.findById(
@@ -31,7 +65,7 @@ router.get('/:movie_id', (req, res, next) => {
   );
 });
 
-//get movie detail
+//delete movie
 router.delete('/:movie_id', (req, res, next) => {
   Movie.findByIdAndRemove(
     req.params.movie_id,
