@@ -6,6 +6,7 @@ const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
 const movieRouter = require('./routes/movie');
+const directorsRouter = require('./routes/directors');
 
 var app = express();
 
@@ -21,6 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/api/movies', movieRouter);
+app.use('/api/directors', directorsRouter);
 
 //db connections
 const db = require('./helper/db.js')();
