@@ -20,12 +20,20 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/api/movies', movieRouter);
-app.use('/api/directors', directorsRouter);
-
 //db connections
 const db = require('./helper/db.js')();
+
+//config
+const config =  require('./config');
+app.set('api_secret_key', config.api_secret_key);
+
+//middleware
+const verifyToken = require('./midleware/verify_token');
+
+app.use('/', indexRouter);
+app.use('/api', verifyToken);
+app.use('/api/movies', movieRouter);
+app.use('/api/directors', directorsRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
