@@ -37,6 +37,42 @@ router.post('/register', (req, res) => {
   });
 });
 
+//delete user
+router.delete('/register', (req, res) => {
+  const {username, password} = req.body;
+
+  User.findOne({
+    username,
+  }, (err, user) => {
+    if(err)
+      throw err;
+
+    if(!user){
+      res.json({
+        status: false,
+        message: 'Authentication Failed, User Not Found',
+      });
+    }else{
+      bcrypt.compare(password, user.password).then(
+        (result) => {
+          if(!result){
+            res.json({
+              status: false,
+              message: 'Authentication Failed, Password Is Not Correct',
+            });
+          }else{
+            user.deleteOne();
+            res.json({
+              status: true,
+              message: "Userser Deleted",
+            })
+          }
+        }
+      );
+    }
+  });
+});
+
 //login, authentication
 router.post('/authenticate', (req, res) => {
   const {username, password} = req.body;
