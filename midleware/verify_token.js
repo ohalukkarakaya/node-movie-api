@@ -10,6 +10,7 @@ module.exports = (req, res, next) => {
         jwt.verify(token, req.app.get('api_secret_key'), (err, decoded) => {
             if(err){
                 res.json({
+                    error: err,
                     status: false,
                     message: 'Failed to Authenticate Token'
                 });

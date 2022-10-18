@@ -1,3 +1,3 @@
 module.exports = {
-    api_secret_key: 'Bareer'
+    api_secret_key: 'Movies_Key'
 }

@@ -121,7 +121,7 @@ router.get('/:director_id', (req, res) => {
 
     promise.then(
       (data) => {
-        res.json(data);
+        res.json(data[0]);
       }
     ).catch(
       (err) => {
@@ -159,7 +159,10 @@ router.put('/:director_id', (req, res, next) => {
 
     promise.then(
         (data) => {
-            res.json(data);
+            res.json({
+              status: true,
+              message: 'Director Deleted',
+            });
         }
     ).catch(
         (err) => {
