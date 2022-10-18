@@ -4,17 +4,36 @@ const should = chai.should();
 const server = require('../../app');
 
 chai.use(chaiHttp);
-let token, movieId;
+let token, testUsername, testPassword, movieId;
+
+describe('/register create test user', () => {
+  it(
+    'create test user',
+    (done) => {
+      chai.request(server)
+            .post('/register')
+            .send({
+                username: 'Test User',
+                password: 'P@ssw0rd!234'
+            }).end((err, res) => {
+                testUsername = res.body.username;
+                testPassword = 'P@ssw0rd!234'
+                done();
+            });
+    }
+  )
+});
 
 describe('api/movies tests', () => {
     before((done) => {
         chai.request(server)
             .post('/authenticate')
             .send({
-                username: 'Özgür Haluk',
-                password: 'halukkarakaya!1234'
+                username: 'Test User',
+                password: 'P@ssw0rd!234',
             }).end((err, res) => {
                 token = res.body.token;
+                console.log(token);
                 done();
             });
     });
@@ -146,4 +165,24 @@ describe('api/movies tests', () => {
           }
         );
     });
+
+    describe('/DELETE test user', () => {
+      it(
+        'it should DELETE test user',
+        (done) => {
+          chai.request(server)
+              .delete('/register')
+              .send({
+                username: testUsername,
+                password: testPassword
+              }).end((err, res) => {
+                console.log(testPassword);
+                  res.should.have.status(200);
+                  res.body.should.have.property('status').eql(true);
+                  res.body.should.have.property('message').eql("User Deleted");
+                  done();
+              });
+        }
+      );
+  });
 });

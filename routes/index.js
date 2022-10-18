@@ -64,7 +64,7 @@ router.delete('/register', (req, res) => {
             user.deleteOne();
             res.json({
               status: true,
-              message: "Userser Deleted",
+              message: "User Deleted",
             })
           }
         }
