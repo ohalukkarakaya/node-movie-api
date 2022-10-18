@@ -28,6 +28,6 @@
 | /register | `POST` | { username: 'foo', password:'1234' } | Create a new user. |
 | /authenticate | `POST` | { username: 'foo', password:'1234' } | Generate a token. |
 
-# Try Live Demo
+# Base url of live demo:
 
 https://node--basic--back-end--server.herokuapp.com/
