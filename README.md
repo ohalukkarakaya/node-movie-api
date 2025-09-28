@@ -122,17 +122,47 @@ Use this token in the `Authorization` header as `Bearer <token>` for all protect
 
 ## 📈 System Flow Diagram
 ```
-[ Client ] → [ API Endpoints ] → [ MongoDB Database ]
+flowchart LR
+  A[Client] -->|HTTP/JSON| B[Express API]
+  B -->|JWT verify| C[Auth Middleware]
+  B -->|CRUD| D[(MongoDB)]
+  C --> D
+  B --> E[Responses (200/4xx/5xx)]
+  E --> A
 ```
+
+---
+
+## Auth Sequence
+
+```
+sequenceDiagram
+  participant U as User
+  participant API as Express API
+  participant DB as MongoDB
+
+  U->>API: POST /register {username, password}
+  API->>DB: Create user (hashed pwd)
+  DB-->>API: OK (userId)
+  API-->>U: 201 Created
+
+  U->>API: POST /authenticate {username, password}
+  API->>DB: Find & verify hash
+  DB-->>API: OK
+  API-->>U: 200 {token: JWT}
+
+```
+
+---
+
+## ⚠️ Error Handling (Özet)
+- `401 Unauthorized`: Missing/corrupt JWT or login error
+- `404 Not Found`: Source (movie/director) not found
+- `422 Unprocessable Entity`: Mandatory fields are missing/invalid
+- `500 Internal Server Error`: Unexpected server error
 
 ---
 
 ## 🌐 Live Demo
 Deployed on Heroku:  (deprecated)  
 👉 [https://node--basic--back-end--server.herokuapp.com/](https://node--basic--back-end--server.herokuapp.com/)
-
----
-
-## 📌 Notes
-- This documentation is updated iteratively as new features are added.  
-- Future improvements: error handling section, sample Postman collection, and architecture diagram.
