@@ -5,6 +5,11 @@ It demonstrates how to implement CRUD operations, authentication, and querying d
 
 ---
 
+## 🎯 Intended Audience
+This documentation is intended for **developers** who want to integrate this API into their applications.
+
+---
+
 ## 🚀 Features
 - User registration & authentication with JWT  
 - CRUD operations for **movies** and **directors**  
@@ -115,8 +120,15 @@ Use this token in the `Authorization` header as `Bearer <token>` for all protect
 
 ---
 
+## 📈 System Flow Diagram
+```
+[ Client ] → [ API Endpoints ] → [ MongoDB Database ]
+```
+
+---
+
 ## 🌐 Live Demo
-Deployed on Heroku:  (deprecated)
+Deployed on Heroku:  (deprecated)  
 👉 [https://node--basic--back-end--server.herokuapp.com/](https://node--basic--back-end--server.herokuapp.com/)
 
 ---
