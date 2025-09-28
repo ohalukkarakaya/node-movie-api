@@ -121,21 +121,23 @@ Use this token in the `Authorization` header as `Bearer <token>` for all protect
 ---
 
 ## 📈 System Flow Diagram
-```
+
+```mermaid
 flowchart LR
-  A[Client] -->|HTTP/JSON| B[Express API]
+  A[Client] -->|HTTP JSON| B[Express API]
   B -->|JWT verify| C[Auth Middleware]
-  B -->|CRUD| D[(MongoDB)]
+  B -->|CRUD| D[MongoDB]
   C --> D
-  B --> E[Responses (200/4xx/5xx)]
+  B --> E[Responses 200/4xx/5xx]
   E --> A
+
 ```
 
 ---
 
 ## Auth Sequence
 
-```
+```mermaid
 sequenceDiagram
   participant U as User
   participant API as Express API
