@@ -157,7 +157,7 @@ sequenceDiagram
 
 ---
 
-## ⚠️ Error Handling (Özet)
+## ⚠️ Error Handling
 - `401 Unauthorized`: Missing/corrupt JWT or login error
 - `404 Not Found`: Source (movie/director) not found
 - `422 Unprocessable Entity`: Mandatory fields are missing/invalid
